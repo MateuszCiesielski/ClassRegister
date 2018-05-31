@@ -1,0 +1,118 @@
+public class Klasy
+    {
+        [Key]
+        public int k_id { get; set; }
+        public string SymbolKlasy { get; set; }
+        public string Wychowawca { get; set; }
+        public string Profil { get; set; }
+
+        // --- relacje ---
+        public virtual List<DaneUczniów> DaneUczniów { get; set; }
+    }
+
+    public class DaneUczniów
+    {
+        [Key]
+        public int u_id { get; set; }
+        public string Imiê { get; set; }
+        public DateTime DataUrodzenia { get; set; }
+        public string AdresZamieszkania { get; set; }
+        public byte[] Zdjêcie { get; set; }
+        public int k_id { get; set; }
+        public DateTime DataRozpoczêciaNauki { get; set; }
+
+        // --- relacje ---
+        public virtual Klasy Klasy { get; set; }
+        public virtual Frekwencja Frekwencja { get; set; }
+        public virtual OcenyCz¹stkowe OcenyCz¹stkowe { get; set; }
+        public virtual StatystykaKoñcowa StatystykaKoñcowa { get; set; }
+    }
+
+    public class Frekwencja
+    {
+        [Key]
+        public int f_id { get; set; }
+        public DateTime DataZajêæ { get; set; }
+        public int u_id { get; set; }
+        public bool Obecnoœæ { get; set; }
+
+        // --- relacje ---
+        public virtual List<DaneUczniów> Uczniowie { get; set; }
+    }
+
+    public class OcenyCz¹stkowe
+    {
+        [Key]
+        public int oc_id { get; set; }
+        public DateTime DataOceny { get; set; }
+        public int u_id { get; set; }
+        public int Ocena { get; set; }
+        public string RodzajOceny { get; set; }
+
+        // --- relacje ---
+        public virtual List<DaneUczniów> Uczniowie { get; set; }
+    }
+
+    public class StatystykaKoñcowa
+    {
+        [Key]
+        public int s_id { get; set; }
+        public int u_id { get; set; }
+        public decimal Œrednia { get; set; }
+        public int Frekwencja { get; set; }
+        public int OcenaKoñcowa { get; set; }
+
+        // --- relacje ---
+        public virtual List<DaneUczniów> Uczeñ { get; set; }
+    }
+
+    public class DziennikContext : DbContext
+    {
+        public DbSet<Klasy> Klasy { get; set; }
+        public DbSet<DaneUczniów> DaneUczniów { get; set; }
+        public DbSet<OcenyCz¹stkowe> OcenyCz¹stkowe { get; set; }
+        public DbSet<Frekwencja> Frekwencja { get; set; }
+        public DbSet<StatystykaKoñcowa> StatystykaKoñcowa { get; set; }
+    }
+    
+    ---
+    
+    /*
+            context.Klasy.AddOrUpdate(
+                new Klasy { SymbolKlasy = "5A", Profil = "zwyk³y", Wychowawca = "Jaros³aw Nowak" },
+                new Klasy { SymbolKlasy = "5B", Profil = "matematyczny", Wychowawca = "Jan Kowalski"},
+                new Klasy { SymbolKlasy = "5C", Profil = "informatyczny", Wychowawca = "Marcin Marciñski" }
+                );
+             */
+            
+            /*
+             context.DaneUczniów.AddOrUpdate(
+                new DaneUczniów { Imiê = "Adam Nowak", AdresZamieszkania = "Dworcowa 7, 11-111 Poznañ", DataUrodzenia = DateTime.Now, DataRozpoczêciaNauki = DateTime.Now, k_id = 2},
+                new DaneUczniów { Imiê = "Jacek Jan", AdresZamieszkania = "D³uga 8, 11-121 Poznañ", DataUrodzenia = DateTime.Now, DataRozpoczêciaNauki = DateTime.Now, k_id = 2}
+                );
+             */
+
+            /*
+             context.Frekwencja.AddOrUpdate(
+                new Frekwencja { DataZajêæ = new DateTime(2017, 03, 02), u_id = 1, Obecnoœæ = true},
+                new Frekwencja { DataZajêæ = new DateTime(2017, 03, 02), u_id = 2, Obecnoœæ = true},
+                new Frekwencja { DataZajêæ = DateTime.Now, u_id = 1, Obecnoœæ = true},
+                new Frekwencja { DataZajêæ = DateTime.Now, u_id = 2, Obecnoœæ = false}
+                );
+             */
+
+            /*
+             context.OcenyCz¹stkowe.AddOrUpdate(
+                new OcenyCz¹stkowe { DataOceny = new DateTime(2017, 03, 02), u_id = 1, Ocena = 4, RodzajOceny = "sprawdzian"},
+                new OcenyCz¹stkowe { DataOceny = new DateTime(2017, 03, 02), u_id = 2, Ocena = 5, RodzajOceny = "sprawdzian"},
+                new OcenyCz¹stkowe { DataOceny = DateTime.Now, u_id = 1, Ocena = 3, RodzajOceny = "kartkowka"},
+                new OcenyCz¹stkowe { DataOceny = DateTime.Now, u_id = 2, Ocena = 2, RodzajOceny = "kartkowka"}
+                );
+             */
+
+            /*
+             context.StatystykaKoñcowa.AddOrUpdate(
+                new StatystykaKoñcowa { u_id = 1, OcenaKoñcowa = 4},
+                new StatystykaKoñcowa { u_id = 2, OcenaKoñcowa = 5}
+                );
+            */
